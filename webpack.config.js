@@ -1,8 +1,8 @@
 module.exports = {
-  entry: './app/app.ts',
-  devtool: 'inline-source-map',
+  entry: './app/app.ts', //app entry point
+  devtool: 'inline-source-map', //tell webpack that source map should be created inline
   mode: 'development',
-  module: {
+  module: { //configure tsloader than will run compiler
     rules: [
       {
         test: /\.tsx?$/,
@@ -11,13 +11,13 @@ module.exports = {
       }
     ]
   },
-  resolve: {
+  resolve: { //which files should be used for mudule resolution
     extensions: [ '.tsx', '.ts', '.js' ]
   },
-  output: {
+  output: { //file webpack will produce
     filename: 'bundle.js'
   },
-  devServer: {
+  devServer: { //keeps browser from automatically refreshing when new bundles are produced, nice for dev and demonstrations
     inline: false
   }
 };
