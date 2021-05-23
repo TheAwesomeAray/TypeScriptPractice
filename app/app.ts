@@ -1,53 +1,61 @@
 function startGame() {
 
-
-
-    //control flow-based type analysis
-    // This type of analysis is the compiler analyzing the conditional behavior in code and applying type checking to
-    // variables using the most narrow criteria possible
     let messagesElement: HTMLElement | null;
-    messagesElement = document.getElementById('messages');
-
-    messagesElement!.innerText = 'Welcome to MultiMath! Starting new game!';
-
-    let playerName: string = 'Andrew';
+    
+    let playerName: string | undefined = getInputValue('playername');
     logPlayer(playerName);
+    postScore(100, playerName);
 
-    //Valid javascript is also valid typescript
+    pointerToFunctionExample();
 }
 
-function logPlayer(name: string): void {
-    console.log(`New game starting for player ${name}`);
+//passing undefined is the same and sending nothing - default value will be used
+function logPlayer(playerName: string = 'Default'): void {
+    console.log(`Starting game for player ${playerName}`);
 }
 
+function getInputValue(elementId: string): string | undefined {
+    const inputElement : HTMLInputElement = document.getElementById(elementId) as HTMLInputElement;
 
-//Function headers              //type             optional      return type
-function sendGreeting(greeting: string, optionalParam?: string) :string {
-    return '';
+    if (inputElement.value === '') {
+        return undefined;
+    } 
+    else {
+        return inputElement.value;
+    }
 }
 
+function postScore(score: number, playerName: string = 'Default Player'): void {
+    const scoreElement: HTMLElement = document.getElementById('postedScores') as HTMLElement;
 
-function sendFarewell(greeting: string, optionalParam: string = 'I am default-initialized'): void {
+    scoreElement!.innerText = `${score} - ${playerName}`;
 }
+
+//arrow functions
+let squareit = (x: number) => x * x;
+let result: number = squareit(4); //16
+
+function pointerToFunctionExample() {
+    //Type safety
+    let logger: (value: string) => void;
+    logger = logMessage;
+
+    logger('Log message to console');
+
+    logger = logError;
+
+    logger('I am an error!');
+}
+
+//function types
+function logMessage(message: string) {
+    console.log(message);
+}
+
+function logError(error: string) {
+    console.error(error);
+}
+
 
 document.getElementById('startGame')!.addEventListener('click', startGame)
-
-//Other Types:
-// Void -- absense of a type (return type for function)
-// Null -- 
-// Undefined --
-// By default, null and undefined are allowed for all types. --strictNullChecks compiler option disallows this unless you opt in
-// by explcitly listing null or undefined in a union type or as the only type allowed
-// Never -- values that will never occur (rare)
-// Any -- opt out of type checking
-
-// Union Types: number | string
-let someValue: number | string;
-someValue = 5;
-someValue = 'hello';
-
-//Type assertions
-let value: any = 5;
-let fixedString: string = (<number>value).toFixed(4);
-let otherString: string = (value as number).toFixed(4);
 
