@@ -8,16 +8,6 @@ function startGame() {
     let messagesElement: HTMLElement | null;
     messagesElement = document.getElementById('messages');
 
-    // if (typeof messagesElement === 'string') {
-    //     //compiler knows that messagesElement is a string here, now a HTMLElement
-    //     return messagesElement;
-    // }
-    // else {
-    //     //compiler knows that this is an HTMLElement or null
-    //     return messagesElement;
-    // }
-
-
     messagesElement!.innerText = 'Welcome to MultiMath! Starting new game!';
 
     let playerName: string = 'Andrew';
@@ -26,8 +16,18 @@ function startGame() {
     //Valid javascript is also valid typescript
 }
 
-function logPlayer(name: string) {
+function logPlayer(name: string): void {
     console.log(`New game starting for player ${name}`);
+}
+
+
+//Function headers              //type             optional      return type
+function sendGreeting(greeting: string, optionalParam?: string) :string {
+    return '';
+}
+
+
+function sendFarewell(greeting: string, optionalParam: string = 'I am default-initialized'): void {
 }
 
 document.getElementById('startGame')!.addEventListener('click', startGame)
