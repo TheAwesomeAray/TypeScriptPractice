@@ -1,9 +1,12 @@
 {
     "extends": "../tsconfig.base",
     "compilerOptions": {
-        "removeComments": true
+        "removeComments": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "traceResolution": true
     },
-    "include": [
-        "./**/*" // . - Look in current directory ** - Look recursively in all subdirectories *.ts look for all files with .ts extension
+    "files": [
+        "./app.ts",
     ]
 }

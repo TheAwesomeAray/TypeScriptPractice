@@ -1,61 +1,19 @@
-function startGame() {
+import { Player } from './player';
+import { Game } from './game';
+import * as Helpers from './utility';
 
-    let messagesElement: HTMLElement | null;
-    
-    let playerName: string | undefined = getInputValue('playername');
-    logPlayer(playerName);
-    postScore(100, playerName);
+let game: Game;
 
-    pointerToFunctionExample();
-}
+document.getElementById('startGame')!.addEventListener('click', () => {
+    let playerName: string = Helpers.getValue('playername') ?? "";
+    const player: Player = new Player(playerName);
+    const problemCount: number = Number(Helpers.getValue('problemCount'));
+    const factor: number = Number(Helpers.getValue('factor'));
 
-//passing undefined is the same and sending nothing - default value will be used
-function logPlayer(playerName: string = 'Default'): void {
-    console.log(`Starting game for player ${playerName}`);
-}
+    game = new Game(player, problemCount, factor);
+    game.displayGame();
+});
 
-function getInputValue(elementId: string): string | undefined {
-    const inputElement : HTMLInputElement = document.getElementById(elementId) as HTMLInputElement;
-
-    if (inputElement.value === '') {
-        return undefined;
-    } 
-    else {
-        return inputElement.value;
-    }
-}
-
-function postScore(score: number, playerName: string = 'Default Player'): void {
-    const scoreElement: HTMLElement = document.getElementById('postedScores') as HTMLElement;
-
-    scoreElement!.innerText = `${score} - ${playerName}`;
-}
-
-//arrow functions
-let squareit = (x: number) => x * x;
-let result: number = squareit(4); //16
-
-function pointerToFunctionExample() {
-    //Type safety
-    let logger: (value: string) => void;
-    logger = logMessage;
-
-    logger('Log message to console');
-
-    logger = logError;
-
-    logger('I am an error!');
-}
-
-//function types
-function logMessage(message: string) {
-    console.log(message);
-}
-
-function logError(error: string) {
-    console.error(error);
-}
-
-
-document.getElementById('startGame')!.addEventListener('click', startGame)
-
+document.getElementById('calculate')?.addEventListener('click', () => {
+    game.calculateScore();
+});
